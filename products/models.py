@@ -30,7 +30,8 @@ class Product(models.Model):
         self.slug=slugify(self.name)
         return(Product,self).save(*args, **kwargs)
 
-
+    def __str__(self):
+        return self.name
 
 
 
@@ -48,7 +49,9 @@ class Reviews(models.Model):
     date=models.DateTimeField(_('date'),default=timezone.now)
     rate=models.IntegerField(_('rate'),choices=[(i,i) for i  in range(1,6)])
 
-
+    
+    def __str__(self):
+        return f'{self.user}-{self.review}-{self.rate}'
 
 
 
@@ -61,7 +64,10 @@ class Brand(models.Model):
         self.slug=slugify(self.name)
         return(Product,self).save(*args, **kwargs)
 
-    
+    def __str__(self):
+        return self.name
+
+
 class User(models.Model):
     pass
 class UserPhone(models.Model):
