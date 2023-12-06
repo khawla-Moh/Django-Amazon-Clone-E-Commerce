@@ -9,7 +9,12 @@ Amazon E-commerc:
 - price
 - image
 - images
-- reviews
+- reviews:
+   name
+   image
+   review
+   rate
+   date
 - reviews count
 - brand :
   -image
