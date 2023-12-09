@@ -26,9 +26,9 @@ class Product(models.Model):
   
     slug=models.SlugField(blank=True,null=True)
     
-    def save(self,*args, **kwargs):
-        self.slug=slugify(self.name)
-        return(Product,self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+            self.slug = slugify(self.name)
+            super(Product, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -60,9 +60,9 @@ class Brand(models.Model):
     image=models.ImageField(upload_to='brand')
     slug=models.SlugField(blank=True,null=True)
     
-    def save(self,*args, **kwargs):
-        self.slug=slugify(self.name)
-        return(Brand,self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+            self.slug = slugify(self.name)
+            super(Brand, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
