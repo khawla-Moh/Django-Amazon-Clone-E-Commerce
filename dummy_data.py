@@ -28,7 +28,7 @@ def seed_products(n):
             name=fake.name(),
             image=f"product/{images[random.randint(0,9)]}",
             flag=flag_type[random.randint(0,2)],
-            price=round(random(20.99,99.99),2),
+            price=round(random.uniform(20.99,99.99),2),
             sku=random.randint(100,1000000),
             subtitle=fake.text(max_nb_chars=450),
             description=fake.text(max_nb_chars=20000),
@@ -43,5 +43,5 @@ def seed_reviews(n):
 
 
 
-seed_brand(200)
-seed_products(2000)
+#seed_brand(200)
+seed_products(1000)
