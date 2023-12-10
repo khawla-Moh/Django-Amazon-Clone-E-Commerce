@@ -35,7 +35,7 @@
                     CSS LINK PART START
         =======================================-->
     <!-- FAVICON -->
-    <link rel="icon" href="{% static 'en/images/favicon.png' %} " />
+    <link rel="icon" href="images/favicon.png" />
 
     <!-- FONTS -->
     <link
@@ -48,13 +48,13 @@
     />
     <link
       rel="stylesheet"
-      href="{% static 'en/fonts/fontawesome/fontawesome.min.css'%}"
+      href="{% static 'en/fonts/fontawesome/fontawesome.min.css' %}"
     />
 
     <!-- VENDOR -->
     <link
       rel="stylesheet"
-      href="{% static 'en/vendor/venobox/venobox.min.css'%}"
+      href="{% static 'en/vendor/venobox/venobox.min.css' %}"
     />
     <link
       rel="stylesheet"
@@ -66,11 +66,12 @@
     />
     <link
       rel="stylesheet"
-      href="{% static 'en/vendor/bootstrap/bootstrap.min.css '%}"
+      href="{% static 'en/vendor/bootstrap/bootstrap.min.css' %}"
     />
 
     <!-- CUSTOM -->
-    <link rel="stylesheet" href="{% static 'en/'  %}" />
+    <link rel="stylesheet" href="{% static 'en/css/main.css' %}" />
+    <link rel="stylesheet" href="{% static 'en/css/index.css' %}" />
     <!--=====================================
                     CSS LINK PART END
         =======================================-->
@@ -1169,15 +1170,8 @@
                     PRODUCT VIEW END
         =======================================-->
 
+    {% block b%} {% endblock b%}
     <!--=====================================
-     
-
-        {% block body %}    
-        {% endblock body %}    
-
-
-        ===================================== 
-    
                     NEWSLETTER PART START
         =======================================-->
     <section
@@ -1203,7 +1197,6 @@
         </div>
       </div>
     </section>
-
     <!--=====================================
                     NEWSLETTER PART END
         =======================================-->
@@ -1395,7 +1388,7 @@
     <script src="{% static 'en/vendor/bootstrap/bootstrap.min.js' %}"></script>
     <script src="{% static 'en/vendor/countdown/countdown.min.js' %}"></script>
     <script src="{% static 'en/vendor/niceselect/nice-select.min.js' %}"></script>
-    <script src="{% static 'en/vendor/slickslider/slick.min.js'%}"></script>
+    <script src="{% static 'en/vendor/slickslider/slick.min.js' %}"></script>
     <script src="{% static 'en/vendor/venobox/venobox.min.js' %}"></script>
 
     <!-- CUSTOM -->
@@ -1405,6 +1398,7 @@
     <script src="{% static 'en/js/venobox.js' %}"></script>
     <script src="{% static 'en/js/slick.js' %}"></script>
     <script src="{% static 'en/js/main.js' %}"></script>
+
     <!--=====================================
                     JS LINK PART END
         =======================================-->

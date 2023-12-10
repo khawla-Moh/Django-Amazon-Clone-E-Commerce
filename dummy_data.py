@@ -1,6 +1,6 @@
-import os,django
+import os , django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
-django.setup
+django.setup()
 from faker import Faker
 import random
 from products.models import Product,Brand,Reviews
@@ -9,7 +9,7 @@ from products.models import Product,Brand,Reviews
 
 def seed_brand(n):
     fake=Faker()
-    images=['',]
+    images=['01.jpg','02.jpg','03.jpg','04.jpg','05.jpg','06.jpg','07.jpg','08.jpg','09.jpg','10.jpg']
     for _ in range(n):
         Brand.objects.create(
             name=fake.name(),
@@ -22,7 +22,7 @@ def seed_products(n):
     fake=Faker()
     flag_type=['new','sale','feature']
     brands=Brand.objects.all()
-    images=['',]
+    images=['01.jpg','02.jpg','03.jpg','04.jpg','05.jpg','06.jpg','07.jpg','08.jpg','09.jpg','10.jpg']
     for _ in range(n):
         Product.objects.create(
             name=fake.name(),
@@ -32,7 +32,7 @@ def seed_products(n):
             sku=random.randint(100,1000000),
             subtitle=fake.text(max_nb_chars=450),
             description=fake.text(max_nb_chars=20000),
-            brand=brands[random.randint(0,len(brands))]
+            brand=brands[random.randint(0,len(brands)-1)]
         )
     print(f"{n} products added successfully")
    
