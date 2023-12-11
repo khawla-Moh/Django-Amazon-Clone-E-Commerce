@@ -38,10 +38,16 @@ def seed_products(n):
    
 def seed_reviews(n):
     pass
+    """ fake=Faker()
+    user=User.objects
+    product=
+    review
+    date
+    rate """
 
 
 
 
 
 #seed_brand(200)
-seed_products(1000)
+#seed_products(1000)
