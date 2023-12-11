@@ -11,5 +11,15 @@ class ProductList(ListView):
 
 
 
+
+#context{},queryset: Product.objexts.all() : 1 : option  2:method :override
+#queryset :main query [detail product]
+#context:extra data   [reviews,images]
+
 class ProductDetail(DetailView):
-    model=Product    
+    model=Product
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['reviewsTem']=Reviews.objects.filter(product=self.get_object())
+        return context    
