@@ -23,5 +23,14 @@ class ProductDetail(DetailView):
         context = super().get_context_data(**kwargs)
         context['reviewsTem']=Reviews.objects.filter(product=self.get_object())
         context['images']=ProductImages.objects.filter(Product=self.get_object())
-        context['related']=Product.objects.filter(brand=self.get_object().brand[:10])
+        context['related']=Product.objects.filter(brand=self.get_object().brand)
         return context
+    
+
+class BrandList(ListView):
+    model=Brand
+
+
+
+class BrandDetails(DetailView):
+    pass
