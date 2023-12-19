@@ -5,6 +5,8 @@ from .models import Product,Brand
 class ProductListSerializer(serializers.ModelSerializer):
     brand=serializers.StringRelatedField()
     review_count=serializers.SerializerMethodField(method_name='get_review_count')
+    avg_rate=serializers.SerializerMethodField()
+    
     class Meta:
         model=Product
         fields='__all__'
@@ -13,10 +15,25 @@ class ProductListSerializer(serializers.ModelSerializer):
     def get_review_count(self,object):
         reviews=object.reviews_product.all().count()
         return reviews
+    
+    def get_avg_rate(self,object):
+        reviews=object.reviews_product.all()
+        total=0
+        if len(reviews)>0:
+            for item in reviews:
+                total +=item.rate
+            avg=total /len(reviews)    
+        else:
+            avg=0
+                 
+        return avg    
+
+
 
 class ProductDetailSerializer(serializers.ModelSerializer):
     brand=serializers.StringRelatedField()
     review_count=serializers.SerializerMethodField(method_name='get_review_count')
+    avg_rate=serializers.SerializerMethodField()
    
     class Meta:
         model=Product
@@ -26,6 +43,17 @@ class ProductDetailSerializer(serializers.ModelSerializer):
         reviews=object.reviews_product.all().count()
         return reviews
  
+    def get_avg_rate(self,object):
+        reviews=object.reviews_product.all()
+        total=0
+        if len(reviews)>0:
+            for item in reviews:
+                total +=item.rate
+            avg=total /len(reviews)    
+        else:
+            avg=0
+                 
+        return avg    
 
 
 class BrandListSerializer(serializers.ModelSerializer):
