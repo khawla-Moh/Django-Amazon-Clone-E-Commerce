@@ -10,8 +10,6 @@ class ProductListSerializer(serializers.ModelSerializer):
 
 
 class ProductDetailSerializer(serializers.ModelSerializer):
-    brand=serializers.StringRelatedField()
-    
     class Meta:
         model=Product
         fields='__all__'
