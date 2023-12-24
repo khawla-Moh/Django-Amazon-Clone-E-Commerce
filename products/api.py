@@ -19,7 +19,7 @@ class ProductListAPI(generics.ListAPIView):
     ordering_fields = ['price']
 
 
-class ProductDetailAPI(generics.ListAPIView):
+class ProductDetailAPI(generics.RetrieveAPIView):
     queryset=Product.objects.all()
     serializer_class=serializers.ProductDetailSerializer    
 
@@ -33,6 +33,6 @@ class BrandListAPI(generics.ListAPIView):
     search_fields = ['name', ]
     
 
-class BrandDetailAPI(generics.ListAPIView):
+class BrandDetailAPI(generics.RetrieveAPIView):
     queryset=Brand.objects.all()
     serializer_class=serializers.BrandDetailSerializer    
