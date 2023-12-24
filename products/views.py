@@ -7,13 +7,20 @@ from .models import Product,Brand,Reviews,ProductImages
 
 
 
+
+
+
+def mydebug(request):
+    data=Product.objects.all
+    return render(request,'products/debug.html',{'data':data})
+
+
+
+
+
 class ProductList(ListView):
     model =Product
     paginate_by=50
-
-
-
-
 
 #context{},queryset: Product.objexts.all() : 1 : option  2:method :override
 #queryset :main query [detail product]
