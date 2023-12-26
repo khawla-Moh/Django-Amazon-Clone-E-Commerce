@@ -4,9 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+
+    {% comment %}
+
+    <p>{{data}}</p>
+
+    {% endcomment %}
+
     <ul>
       {% for obj in data %}
-      <li>{{obj}}-{{obj.brand}}</li>
+      <li>{{obj}}-{{obj.price}}-{{obj.price_with_taxs}}</li>
       {% endfor %}
     </ul>
   </head>
