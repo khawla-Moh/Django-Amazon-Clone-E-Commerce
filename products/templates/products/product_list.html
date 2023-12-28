@@ -410,11 +410,11 @@
               </div>
               <div class="product-content">
                 <div class="product-rating">
-                  <i class="active icofont-star"></i>
-                  <i class="active icofont-star"></i>
-                  <i class="active icofont-star"></i>
-                  <i class="active icofont-star"></i>
-                  <i class="icofont-star"></i>
+                  <i class="icofont-star {% if object.avg_rate > 0 %}active {% endif %} "></i>
+                  <i class="icofont-star {% if object.avg_rate > 1 %}active {% endif %}"></i>
+                  <i class="icofont-star {% if object.avg_rate > 2 %}active {% endif %}"></i>
+                  <i class="icofont-star {% if object.avg_rate > 3 %}active {% endif %}"></i>
+                  <i class="icofont-star {% if object.avg_rate > 4 %}active {% endif %}"></i>
                   <a href="product-video.html">({{object.review_count}})</a>
                 </div>
                 <h6 class="product-name">
@@ -472,12 +472,13 @@
                   <a class="page-link active" href="#">{{i}}</a>
                 </li>
 
-                {% elif i > page_obj.number|add:'-4' and i <
-                page_obj.number|add:'4' %}
+                {% elif i > page_obj.number|add:'-4' and i < page_obj.number|add:'4' %}
                 <li class="page-item">
                   <a class="page-link" href="?page={{i}}">{{i}}</a>
                 </li>
-                {% endif %} {% endfor %} {% if page_obj.has_next %}
+                {% endif %} 
+                {% endfor %} 
+                {% if page_obj.has_next %}
                 <li class="page-item">
                   <a
                     class="page-link"

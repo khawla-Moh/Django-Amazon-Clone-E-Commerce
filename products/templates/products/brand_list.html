@@ -96,13 +96,13 @@
               <a class="page-link active" href="#">{{i}}</a>
             </li>
 
-            {% elif i > page_obj.number|add:'-4' and i < page_obj.number|add:'4'
-            %}
+            {% elif i > page_obj.number|add:'-4' and i < page_obj.number|add:'4' %}
             <li class="page-item">
               <a class="page-link" href="?page={{i}}">{{i}}</a>
             </li>
             {% endif %}
-            {% endfor %} {% if page_obj.has_next %}
+            {% endfor %} 
+            {% if page_obj.has_next %}
             <li class="page-item">
               <a class="page-link" href="?page={{page_obj.next_page_number}}">
                 <i class="fas fa-long-arrow-alt-right"></i>
