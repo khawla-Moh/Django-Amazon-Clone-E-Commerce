@@ -29,18 +29,11 @@ class ProductListSerializer(serializers.ModelSerializer):
     
 
     def get_review_count(self,object):
-        reviews=object.reviews_product.all().count()
+        reviews=object.review_count()
         return reviews
     
     def get_avg_rate(self,object):
-        reviews=object.reviews_product.all()
-        total=0
-        if len(reviews)>0:
-            for item in reviews:
-                total +=item.rate
-            avg=total /len(reviews)    
-        else:
-            avg=0
+        avg=object.avg_rate()
                  
         return avg    
 
