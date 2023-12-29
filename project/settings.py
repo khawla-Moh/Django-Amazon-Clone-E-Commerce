@@ -49,7 +49,10 @@ INSTALLED_APPS = [
     'django_filters',
     'drf_yasg',
     "debug_toolbar",
+    
+    #your app
     'products',
+    'settings',
     
 ]
 
