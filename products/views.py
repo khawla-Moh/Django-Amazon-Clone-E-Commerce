@@ -5,6 +5,9 @@ from django.views.generic import ListView,DetailView
 from .models import Product,Brand,Reviews,ProductImages
 from django.db.models import Q,F,Value
 from django.db.models.aggregates import Count,Sum,Min,Max,Avg
+from django.views.decorators.cache import cache_page
+
+
 
 # Create your views here.
 
@@ -12,7 +15,7 @@ from django.db.models.aggregates import Count,Sum,Min,Max,Avg
 
 
 
-
+@cache_page(60 * 1)
 def mydebug(request):
     '''
     ## number column:--------------------------------
@@ -107,8 +110,8 @@ def mydebug(request):
     data=Product.objects.annotate(price_with_taxs=F('price')*1.3)
   
     '''
-    data=Product.objects.annotate(price_with_taxs=F('price')*1.3)
-  
+    #data=Product.objects.annotate(price_with_taxs=F('price')*1.3)
+    data=Product.objects.all()
     
     return render(request,'products/debug.html',{'data':data})
 
