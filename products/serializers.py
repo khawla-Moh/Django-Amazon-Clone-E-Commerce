@@ -20,6 +20,10 @@ class ProductReviewSerializer(serializers.ModelSerializer):
 
 class ProductListSerializer(serializers.ModelSerializer):
     brand=serializers.StringRelatedField()
+    review_count=serializers.IntegerField()
+    avg_rate=serializers.FloatField()
+   
+    
     """  review_count=serializers.SerializerMethodField(method_name='get_review_count')
     avg_rate=serializers.SerializerMethodField()
     """ 
@@ -49,6 +53,10 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model=Product
         fields='__all__'
+
+
+
+
 """ 
     def get_review_count(self,object):
         reviews=object.review_count()

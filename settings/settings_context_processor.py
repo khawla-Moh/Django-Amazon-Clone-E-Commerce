@@ -8,6 +8,6 @@ def get_settings(request):
         
     except Exception:
         settings_data=Settings.objects.last()
-        cache.set('settings_data',settings_data,60*60*24)
+        cache.set('settings_data',settings_data,60*60*24*30)
         
     return {'settings_data':settings_data}
