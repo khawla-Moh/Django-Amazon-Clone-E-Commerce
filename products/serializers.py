@@ -45,9 +45,12 @@ class ProductListSerializer(serializers.ModelSerializer):
 
 class ProductDetailSerializer(serializers.ModelSerializer):
     brand=serializers.StringRelatedField()
-    """ review_count=serializers.SerializerMethodField(method_name='get_review_count')
+    """ 
+    review_count=serializers.SerializerMethodField(method_name='get_review_count')
     avg_rate=serializers.SerializerMethodField()
     """
+    review_count=serializers.IntegerField()
+    avg_rate=serializers.FloatField()
     images=ProductImageSerializer(source='product_images',many=True)
     reviews=ProductReviewSerializer(source='reviews_product',many=True)
     class Meta:
