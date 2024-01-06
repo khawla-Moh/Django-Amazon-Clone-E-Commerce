@@ -1,7 +1,5 @@
 from rest_framework import serializers
-from taggit.serializers import (TagListSerializerField,
-                                TaggitSerializer)
-
+from taggit.serializers import (TagListSerializerField, TaggitSerializer)
 from .models import Product,Brand,Reviews,ProductImages
 
 
