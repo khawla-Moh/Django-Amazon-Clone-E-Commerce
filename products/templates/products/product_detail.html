@@ -190,6 +190,15 @@
                   <span>{{review.date}}</span>
                 </h5>
               </div>
+              <ul class="review-rating">
+                <li class="icofont-ui-{% if review.rate > 0 %}rating{% else %}rate-blank{% endif %}"></li>
+                <li class="icofont-ui-{% if review.rate > 0 %}rating{% else %}rate-blank{% endif %}"></li>
+                <li class="icofont-ui-{% if review.rate > 0 %}rating{% else %}rate-blank{% endif %}"></li>
+                <li class="icofont-ui-{% if review.rate > 0 %}rating{% else %}rate-blank{% endif %}"></li>
+                <li class="icofont-ui-{% if review.rate > 0 %}rating{% else %}rate-blank{% endif %}"></li>
+                
+            </ul>
+  
               <p class="review-desc">{{review.review}}</p>
               <ul class="review-reply-list">
                 <li class="review-reply-item">
