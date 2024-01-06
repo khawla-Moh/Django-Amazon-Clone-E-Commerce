@@ -9,7 +9,7 @@ def home(request):
     new_product=Product.objects.filter(flag='New')[:10]
     sale_product=Product.objects.filter(flag='Sale')
     feature_product=Product.objects.filter(flag='Feature')
-    brand=Brand.objects.annotate(product_count=Count('product_prand'))
+    brands=Brand.objects.annotate(product_count=Count('product_prand'))[:10]
     reviews=Reviews.objects.all
 
 
@@ -20,6 +20,6 @@ def home(request):
         'new_product':new_product,
         'sale_product':sale_product,
         'feature_product':feature_product,
-        'brand':brand,
+        'brand':brands,
         'reviews':reviews
     })
