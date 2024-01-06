@@ -1,6 +1,6 @@
 from typing import Any
 from django.db.models.query import QuerySet
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views.generic import ListView,DetailView
 from .models import Product,Brand,Reviews,ProductImages
 from django.db.models import Q,F,Value
@@ -161,6 +161,29 @@ class BrandDetails(ListView):
         context["brand"]=brand=Brand.objects.filter(slug=self.kwargs['slug']).annotate(product_count=Count('product_prand'))[0]
 
         return context
+
+
+
+
+
+
+
+
+
+
+def add_review(request,slug):
+    product=Product.objects.get(slug=slug)
+    review=request.POST["review"]     #POST take the name in name tag #(way to write ppost)review=request.POST.get("review")
+    rate=request.POST["rating"]       #or if it GET requet.GET.get('review')    #instead of list [] make dic ()
+    
+    Reviews.objects.create(
+        user=request.user,
+        product=product,
+        review=review,
+        rate=rate
+    )
+    
+    return redirect(f'/products/{slug}')
 
 
 """ class BrandDetails(DetailView):

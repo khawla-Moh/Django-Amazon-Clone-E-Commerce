@@ -7,8 +7,8 @@ from products.models import Product,Brand,Reviews
 # Create your views here.
 def home(request):
     new_product=Product.objects.filter(flag='New')[:10]
-    sale_product=Product.objects.filter(flag='Sale')
-    feature_product=Product.objects.filter(flag='Feature')
+    sale_product=Product.objects.filter(flag='Sale')[:10]
+    feature_product=Product.objects.filter(flag='Feature')[:10]
     brands=Brand.objects.annotate(product_count=Count('product_prand'))[:10]
     reviews=Reviews.objects.all
 
