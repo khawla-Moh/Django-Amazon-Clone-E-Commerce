@@ -4,70 +4,87 @@ Amazon E-commerc:
 
 **data:**
 
-- name
-- flag(new,sale,Feature)
-- price
-- image
-- images
-- reviews:
-   name
-   image
-   review
-   rate
-   date
-- reviews count
-- brand :
-  -image
-  -name
-  -item count
+  - name
+  - flag(new,sale,Feature)
+  - price
+  - image
+  - images
+  - reviews:
+    name
+    image
+    review
+    rate
+    date
+  - reviews count
+  - brand :
+    -image
+    -name
+    -item count
 
-- sku
-- subtitle
-- tags
-- related
-- description
+  - sku
+  - subtitle
+  - tags
+  - related
+  - description
 
 - **Function:**
 
-- list
-- detail
-- brand list
-- brand detail
-- search
-- filter
-- add to cart
-- add to whishlist
--
+  - list
+  - detail
+  - brand list
+  - brand detail
+  - search
+  - filter
+  - add to cart
+  - add to whishlist
+  -
 
 ## USER:
 
 **data:**
 
-- username
+  - username
 
-- email
+  - email
 
-- image
+  - image
 
-- contact number:
+  - contact number:
 
-  type(primary-seconadary)
+      type(primary-seconadary)
 
   number
 
-- adress:
+  - adress:
 
-  type(home,offiece,acdemy,bussiness)
+      type(home,offiece,acdemy,bussiness)
 
-  adress
+      adress
 
 ## function:
 
-- auth
-- dashboard
-- profile
-- edit profile
+  - auth
+  - dashboard
+  - profile
+  - edit profile
 
 models:
 
 product,user,review,brand
+
+
+
+_________________________________________________________
+App Orders:
+  -adress 
+  -product
+  -price
+  -brand
+  -quantity
+  -oreder-time
+  -deliverly_time
+  -oreder_id
+  -total_item
+  -discount
+  -delivery fee
+  -status=['Recieved','Processed','Shiped','Delivered']  
