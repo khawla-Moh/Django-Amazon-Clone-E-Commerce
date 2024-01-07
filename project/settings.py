@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'django_filters',
     'drf_yasg',
     "debug_toolbar",
+    "orders",
+    "accounts"
     
     #your app
     'products',
