@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     "debug_toolbar",
     "orders",
-    "accounts"
+    "accounts",
     
     #your app
     'products',
