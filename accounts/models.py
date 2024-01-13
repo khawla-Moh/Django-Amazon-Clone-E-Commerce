@@ -15,3 +15,20 @@ class Address(models.Model):
     user=models.ForeignKey(User,related_name='address_user',on_delete=models.CASCADE)
     address=models.TextField(max_length=200)
     type=models.CharField(max_length=8,choices=ADDRESS_TYPE) 
+
+
+
+
+
+class DeliveryFee(models.Model):
+    fee=models.IntegerField()
+
+
+
+    def __Str__(self):
+        return str(self.fee)
+
+
+
+
+
