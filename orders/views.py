@@ -12,17 +12,11 @@ def checkout(reguest):
 
 
 def add_to_cart(request):
-    product=Product.objects.get(id=request.POST['product_id'])
-    quantity=int(request.POST['quantity'])
-    cart=Cart.objects.get(user=request.user,status='Inprogress')
-    cart_detail,created=CartDetail.objects.get_or_create(cart=cart,product=product)
-
-    """ if not created:
-        cart_detail=cart_detail.quantity + quantity
-         """
-
-    cart_detail.quantity=quantity
-    cart_detail.total=round( product.price * cart_detail.quantity,2)
-    cart_detail.save()
-
-    return redirect(f'/products/{product.slug}')
+   product=Product.objects.get(id=request.POST['product_id'])
+   quantity=request.POST['quantity']
+   cart=Cart.objects.get(user=request.user,status='Inprogress')
+   cart_detail,created=CartDetail.objects.get_or_create(cart=cart,product=product)           #field cart,product in cartDetial model
+   
+   cart_detail.total=round(product.price * cart_detail.quantity,2)
+   cart_detail.save()
+   return redirect(f'/products/{product.slug}')

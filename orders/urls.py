@@ -6,7 +6,7 @@ from .views import order_list,checkout,add_to_cart
 urlpatterns = [
     path('',order_list),
     path('checkout/',checkout),
-    path('add_to_cart',add_to_cart),
-]
+    path('add_to_cart',add_to_cart)
+    ]
 
 
