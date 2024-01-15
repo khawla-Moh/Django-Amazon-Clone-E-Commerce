@@ -1,4 +1,7 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
+import datetime
+
+
 from .models import Order,OrderDetail,Cart,CartDetail,Coupon
 from products.models import Product
 from settings.models import DeliveryFee
@@ -11,10 +14,40 @@ def order_list(request):
 def checkout(reguest):
     cart=Cart.objects.get(user=reguest.user,status="Inprogress")
     cart_detail=CartDetail.objects.filter(cart=cart)
-    subTotal=cart.cart_total
     delivery_fee=DeliveryFee.objects.last().fee
+   
+
+    #____________________applying Coupon___________________
+    if reguest.method=='POST':
+        code=reguest.POST['coupon_code']
+        #coupon=Coupon.objects.get(code=code)
+        coupon=get_object_or_404(Coupon,code=code)           #from model coupon check if code =code in model or show 404
+    #_applying Coupon if there is a coupon it isn't expired & it isn't finsh & ___________________
+        if coupon and coupon.quantity >0:
+            tody_date=datetime.datetime.today().date()
+            if tody_date >= coupon.start_date and tody_date<= coupon.end_date:
+                coupon_value=cart.cart_total / 100*coupon.discount         
+                subTotal=cart.cart_total - coupon_value
+                total=subTotal + delivery_fee
+                
+
+                cart.coupon=coupon                                #assign coupon value to cart.coupon field   
+                cart.total_with_coupn=subTotal
+                cart.save()
+
+
+                return render(reguest,'orders/checkout.html',{
+                    "cart_detail":cart_detail,
+                    "subTotal":subTotal,
+                    "delivery_fee":delivery_fee,
+                    "discount":coupon_value,
+                    "total":total
+                    })
+
+    subTotal=cart.cart_total 
     discount=0
     total=subTotal +delivery_fee
+     
 
     return render(reguest,'orders/checkout.html',{
         "cart_detail":cart_detail,
@@ -23,7 +56,7 @@ def checkout(reguest):
         "discount":discount,
         "total":total
         })
-
+ 
 
 def add_to_cart(request):
    product=Product.objects.get(id=request.POST['product_id'])
