@@ -12,7 +12,7 @@ urlpatterns = [
 
 
     #______________api url_________________
-    path('api/list',OrderListAPI.as_view())
+    path('api/<str:username>/orders',OrderListAPI.as_view())    #go to order for this user who orderd 
 
     ]
 
