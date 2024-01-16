@@ -26,9 +26,9 @@ def checkout(reguest):
         if coupon and coupon.quantity >0:
             tody_date=datetime.datetime.today().date()
             if tody_date >= coupon.start_date and tody_date<= coupon.end_date:
-                coupon_value=cart.cart_total / 100*coupon.discount         
-                subTotal=cart.cart_total - coupon_value
-                total=subTotal + delivery_fee
+                coupon_value=round( cart.cart_total / 100*coupon.discount,2)         
+                subTotal=round( cart.cart_total - coupon_value,2    )
+                total=round( subTotal + delivery_fee,2)
                 
 
                 cart.coupon=coupon                                #assign coupon value to cart.coupon field   
