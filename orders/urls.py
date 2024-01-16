@@ -12,8 +12,8 @@ urlpatterns = [
 
 
     #______________api url_________________
-    path('api/<str:username>/orders',OrderListAPI.as_view())    #go to order for this user who orderd 
-
+    path('api/<str:username>/orders',OrderListAPI.as_view()),            #go to order for this user who orderd 
+    path('api/<str:username>/<int:pk>/orders',OrderListAPI.as_view()) ,   #go to order for this user who orderd and product id
     ]
 
 

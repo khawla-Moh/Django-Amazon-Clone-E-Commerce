@@ -13,7 +13,7 @@ class OrderListAPI(generics.ListAPIView):
     serializer_class=OrderSerializer
     queryset=Order.objects.all()
 
-    """ 
+     
 
     def get_queryset(self): # this method to override the querty above#
         queryet=super(OrderListAPI,self).get_queryset()
@@ -21,8 +21,9 @@ class OrderListAPI(generics.ListAPIView):
         user=User.objects.get(username=self.kwargs['username'])          #kwargs['username'] --> indicate to path ('api/<str:username>/orders
         queryet=queryet.filter(user=user)
         return queryet
-    """    
-    def list(self,request,*args,**kwargs):                                       #to ovveride the method django provide name list to can ovveride not get_queryset
+        
+    """
+    def list(self,request,*args,**kwargs):                                #to ovveride the method django provide name list to can ovveride not get_queryset
         queryet=super(OrderListAPI,self).get_queryset()
         
         user=User.objects.get(username=self.kwargs['username'])          
@@ -30,3 +31,11 @@ class OrderListAPI(generics.ListAPIView):
 
         data=OrderSerializer(queryet,many=True).data
         return Response({'orders':data})
+    """
+
+
+
+class OrderDetailAPI(generics.RetrieveAPIView):
+    serilazer_class=OrderSerializer
+    queryset=Order.objects.all()
+
