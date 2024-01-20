@@ -22,7 +22,7 @@ def checkout(reguest):
         code=reguest.POST['coupon_code']
         #coupon=Coupon.objects.get(code=code)
         coupon=get_object_or_404(Coupon,code=code)           #from model coupon check if code =code in model or show 404
-    #_applying Coupon if there is a coupon it isn't expired & it isn't finsh & ___________________
+        #_applying Coupon if there is a coupon it isn't expired & it isn't finsh & ___________________
         if coupon and coupon.quantity >0:
             tody_date=datetime.datetime.today().date()
             if tody_date >= coupon.start_date and tody_date<= coupon.end_date:
@@ -34,6 +34,9 @@ def checkout(reguest):
                 cart.coupon=coupon                                #assign coupon value to cart.coupon field   
                 cart.total_with_coupn=subTotal
                 cart.save()
+
+                coupon.quantity -=1
+                coupon.save()
 
 
                 return render(reguest,'orders/checkout.html',{
