@@ -113,4 +113,29 @@ class CreatetOrderAPI(generics.GenericAPIView):
 
 
 class CartCreateUpdateDelete(generics.GenericAPIView):
-    pass
+    def get(self,request,*args,**kwargs):  #to get or create a cart
+        user=User.objects.get(username=self.kwargs['username'])
+        cart,create=Cart.objects.get_or_create(user=user,status='Inprogress')
+        data=CartSerializer(cart).data             #cartserialzer contain cartdetail
+        return Response({"cart":data})
+
+
+    def post(self,request,*args,**kwargs): #to add & update
+        user=User.objects.get(username=self.kwargs['username'])
+        product=Product.objects.get(id=request.data['product_id'])
+        quantity=int(request.data['quantity'])
+        
+        cart=Cart.objects.get(user=user,status='Inprogress')
+        cart_detail,created=CartDetail.objects.get_or_create(cart=cart,product=product)           #field cart,product in cartDetial model
+        
+        cart_detail.quantity=quantity
+        cart_detail.total=round(product.price * cart_detail.quantity,2)
+        cart_detail.save()
+        return Response({'message':'cart was updated successfully'},status=status.HTTP_200_OK)
+
+    
+    def delete(self,request,*args,**kwargs):#to delete
+        user=User.objects.get(username=self.kwargs['username'])
+        product=CartDetail.objects.get(id=request.data['item_id'])
+        product.delete()
+        return Response({'message':'item was deleted successfully'},status=status.HTTP_202_ACCEPTED)
