@@ -45,9 +45,25 @@ def signup(request):
       -send email (code activation):code
       -redirct to acitvate page
     '''
-def user_activate(request):
+
+
+
+def user_activate(request,username):
+    
+    profile=Profile.objects.get(user__username=username)   
     if request.method=='POST':
         form=UserActivateForm(request.POST)
+        if form.is_valid():
+           code=form.cleaned_data['code']
+           if code== profile.code:
+              code=''
+              user=User.objects.get(username=username)
+              user.is_active=True
+              user.save()
+              profile.save()
+              redirect('/accounts/login')
+           
+           form.save()
 
     else:
         form=SignupForm
