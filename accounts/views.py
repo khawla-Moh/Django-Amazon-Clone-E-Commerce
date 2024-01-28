@@ -31,6 +31,7 @@ def signup(request):
             ["email"],
             fail_silently=False,
         ) 
+       return redirect(f'/accounts/{username}/activate')
 
 
 
