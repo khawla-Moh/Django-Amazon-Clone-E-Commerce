@@ -9,38 +9,38 @@ from django.core.mail import send_mail
 # Create your views here.
 
 def signup(request):
-   if request.method=='POST':
-    form=SignupForm(request.POST)
-    if form.is_valid():
-       username=form.cleaned_data['username']
-       email=form.cleaned_data['email']
+    if request.method == 'POST':
+        form=SignupForm(request.POST)
+        if form.is_valid():
+            username=form.cleaned_data['username']
+            email=form.cleaned_data['email']
 
-       user=form.save(commit=False)    
-       user.is_active=False                                    #signup(create account but not activates yet)
-
-
-       form.save()                                             #triggle signal ---> create profile ---> code
-
-       profile=Profile.objects.get(user__username= username)   #get activation code from profile
-       #sending email 
-       
-       send_mail(
-            "Activate Your Account",
-            f"Welcome {username} \n Use this code {profile.code} to avtivate your account",
-            "pythondeveloper6@gmail.com",
-            ["email"],
-            fail_silently=False,
-        ) 
-       return redirect(f'/accounts/{username}/activate')
+            user=form.save(commit=False)    
+            user.is_active=False                                    #signup(create account but not activates yet)
 
 
+            form.save()                                             #triggle signal ---> create profile ---> code
 
-   else:
-    form=SignupForm()
+            profile=Profile.objects.get(user__username= username)   #get activation code from profile
+            #sending email 
+            
+            send_mail(
+                    "Activate Your Account",
+                    f"Welcome {username} \n Use this code {profile.code} to avtivate your account",
+                    "pythondeveloper6@gmail.com",
+                    ["email"],
+                    fail_silently=False,
+                ) 
+            return redirect(f'/accounts/{username}/activate')
+
+
+
+    else:
+        form=SignupForm()
    
-   return render(request,'account/signup.html',{'form':form})
+    return render(request,'accounts/signup.html',{'form':form})
 
-   '''
+    '''
       -create new user
       -send email (code activation):code
       -redirct to acitvate page
@@ -56,19 +56,22 @@ def user_activate(request,username):
         if form.is_valid():
            code=form.cleaned_data['code']
            if code== profile.code:
-              code=''
+              profile.code=''
+           
               user=User.objects.get(username=username)
               user.is_active=True
+           
               user.save()
               profile.save()
-              redirect('/accounts/login')
            
-           form.save()
+              return redirect('/accounts/login')
+           
+              
 
     else:
-        form=SignupForm
+        form=UserActivateForm()
     
-    return render(request,'account/activate.html',{'form':form})
+    return render(request,'accounts/activate.html',{'form':form})
 
     '''
     -recivee code activation
