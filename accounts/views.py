@@ -9,10 +9,10 @@ from django.core.mail import send_mail
 # Create your views here.
 
 def signup(request):
-    """ 
+     
     if request.user.is_authenticated:
         return redirect('/') 
-    """
+    
 
     if request.method == 'POST':
         form=SignupForm(request.POST)
