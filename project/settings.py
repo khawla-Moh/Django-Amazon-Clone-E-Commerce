@@ -166,6 +166,10 @@ CACHES = {
     }
 }
 
+LOGIN_REDIRECT_URL = '/'
+
+
+
 AUTHENTICATION_BACKENDS= ['accounts.backend.EmailOrUsernameLogin',
 ]
 #EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" to check email from terminal
