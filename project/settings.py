@@ -38,6 +38,7 @@ REST_FRAMEWORK = {
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,14 +49,14 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'drf_yasg',
-    "debug_toolbar",
-    "orders",
-    "accounts",
+    'debug_toolbar',
+    'orders',
+    
     
     #your app
     'products',
     'settings',
-    
+    'django_bootstrap5',      
 ]
 
 MIDDLEWARE = [
