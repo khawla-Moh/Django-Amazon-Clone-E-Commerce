@@ -32,7 +32,11 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 ,
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 100
+    'PAGE_SIZE': 100,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        
+    ]
 }
 
 # Application definition
@@ -51,6 +55,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'debug_toolbar',
     'orders',
+    'rest_framework.authtoken',
     
     
     #your app
