@@ -48,7 +48,7 @@ class OrderDetailAPI(generics.RetrieveAPIView):
 class ApplyCouponAPI(generics.GenericAPIView):
     def post(self,request,*args,**kwargs):
         user=User.objects.get(username=self.kwargs['username'])          
-        coupon=get_object_or_404(Coupon,code=code)           #from model coupon check if code =code in model or show 404
+        coupon=get_object_or_404(Coupon,code=request.data['coupon_code'])           #from model coupon check if code =code in model or show 404
         delivery_fee=DeliveryFee.objects.last().fee
         cart=Cart.objects.get(user=user,status="Inprogress")
 
@@ -87,7 +87,7 @@ class CreatetOrderAPI(generics.GenericAPIView):
           user=user,
           status= 'Reecieved',
           code=code,
-          address=user_address,
+          delivery_address=user_address,
           coupon=cart.coupon,
           total_with_coupn=cart.total_with_coupn,
           total=cart.cart_total

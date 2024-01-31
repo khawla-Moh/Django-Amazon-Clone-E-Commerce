@@ -79,6 +79,7 @@ class Coupon(models.Model):
 
 
     def save(self, *args, **kwargs):
-        week=datetime.timedelta(days=7)
-        self.end_date=self.start_date + week
+        if not self.end_date:
+            week=datetime.timedelta(days=7)
+            self.end_date=self.start_date + week
         super(Coupon,self).save(*args, **kwargs) 
