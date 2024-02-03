@@ -28,6 +28,12 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+REST_AUTH = {
+    'USE_JWT': True,
+    'JWT_AUTH_COOKIE': 'jwt-auth',
+}
+
+
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 ,
@@ -50,6 +56,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'dj_rest_auth.registration',
     'taggit',
     'rest_framework',
     'django_filters',
@@ -58,12 +68,15 @@ INSTALLED_APPS = [
     'orders',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
+    'dj_rest_auth',
     
     #your app
     'products',
     'settings',
     'django_bootstrap5',      
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -75,6 +88,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "context_cache.middleware.ContextCacheMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
  
 ]
 
