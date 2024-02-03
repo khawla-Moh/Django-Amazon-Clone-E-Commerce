@@ -122,7 +122,14 @@ def mydebug(request):
 class ProductList(ListView):
     model =Product
     paginate_by=50
-
+    
+    """
+    #Only disply product with quanitity more than 1
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(quantity__gt=0) # TODO
+        return queryset
+    """
 #context{},queryset: Product.objexts.all() : 1 : option  2:method :override
 #queryset :main query [detail product]
 #context:extra data   [reviews,images]
