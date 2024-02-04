@@ -1,6 +1,8 @@
 {% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" {% if LANGUAGE_CODE == 'ar' %} dir="rtl" {% endif %}">
   <head>
     <!--=====================================
                     META TAG PART START
@@ -34,48 +36,58 @@
     <!--=====================================
                     CSS LINK PART START
         =======================================-->
-    <!-- FAVICON -->
-    <link rel="icon" href="images/favicon.png" />
+    
+        
+        {% if LANGUAGE_CODE == 'en' %}
+          
+          
+                    <!-- FAVICON -->
+                <link rel="icon" href="images/favicon.png" />
 
-    <!-- FONTS -->
-    <link
-      rel="stylesheet"
-      href="{% static 'en/fonts/flaticon/flaticon.css' %}"
-    />
-    <link
-      rel="stylesheet"
-      href="{% static 'en/fonts/icofont/icofont.min.css' %}"
-    />
-    <link
-      rel="stylesheet"
-      href="{% static 'en/fonts/fontawesome/fontawesome.min.css' %}"
-    />
+                <!-- FONTS -->
+                <link rel="stylesheet" href="{% static 'en/fonts/flaticon/flaticon.css' %}"  />
+                <link rel="stylesheet" href="{% static 'en/fonts/icofont/icofont.min.css' %}"/>
+                <link rel="stylesheet" href="{% static 'en/fonts/fontawesome/fontawesome.min.css' %}"/>
 
-    <!-- VENDOR -->
-    <link
-      rel="stylesheet"
-      href="{% static 'en/vendor/venobox/venobox.min.css' %}"
-    />
-    <link
-      rel="stylesheet"
-      href="{% static 'en/vendor/slickslider/slick.min.css' %}"
-    />
-    <link
-      rel="stylesheet"
-      href="{% static 'en/vendor/niceselect/nice-select.min.css' %}"
-    />
-    <link
-      rel="stylesheet"
-      href="{% static 'en/vendor/bootstrap/bootstrap.min.css' %}"
-    />
+                <!-- VENDOR -->
+                <link rel="stylesheet" href="{% static 'en/vendor/venobox/venobox.min.css' %}"/>
+                <link rel="stylesheet" href="{% static 'en/vendor/slickslider/slick.min.css' %}"/>
+                <link rel="stylesheet" href="{% static 'en/vendor/niceselect/nice-select.min.css' %}"/>
+                <link rel="stylesheet" href="{% static 'en/vendor/bootstrap/bootstrap.min.css' %}"/>
 
-    <!-- CUSTOM -->
-    <link rel="stylesheet" href="{% static 'en/css/main.css' %}" />
+                <!-- CUSTOM -->
+                <link rel="stylesheet" href="{% static 'en/css/main.css' %}" />
+      {% else %} 
+                          
+                <link rel="icon" href="images/favicon.png" />
 
+                <!-- FONTS -->
+                <link rel="stylesheet" href="{% static 'ar/fonts/flaticon/flaticon.css' %}"  />
+                <link rel="stylesheet" href="{% static 'ar/fonts/icofont/icofont.min.css' %}"/>
+                <link rel="stylesheet" href="{% static 'ar/fonts/fontawesome/fontawesome.min.css' %}"/>
+
+                <!-- VENDOR -->
+                <link rel="stylesheet" href="{% static 'ar/vendor/venobox/venobox.min.css' %}"/>
+                <link rel="stylesheet" href="{% static 'ar/vendor/slickslider/slick.min.css' %}"/>
+                <link rel="stylesheet" href="{% static 'ar/vendor/niceselect/nice-select.min.css' %}"/>
+                <link rel="stylesheet" href="{% static 'ar/vendor/bootstrap/bootstrap.min.css' %}"/>
+
+                <!-- CUSTOM -->
+                <link rel="stylesheet" href="{% static 'ar/css/main.css' %}" />         
+    {% endif %}
+      
+    
+    
+      
     {% block css %}
-    <link rel="stylesheet" href="{% static 'en/css/index.css' %}" />
+        {% if LANGUAGE_CODE == 'en' %}
+                   <link rel="stylesheet" href="{% static 'en/css/index.css' %}" />
+    {% else %}
+                   <link rel="stylesheet" href="{% static 'ar/css/index.css' %}" />
+        {% endif %}
     {% endblock css %}
-
+    
+     
     <!--=====================================
                     CSS LINK PART END
         =======================================-->
@@ -96,14 +108,26 @@
             </div>
           </div>
           <div class="col-md-5 col-lg-3">
-            <div class="header-top-select">
+            <div class="header- top-select">
               <div class="header-select">
                 <i class="icofont-world"></i>
-                <select class="select">
-                  <option value="english" selected>english</option>
-                  <option value="bangali">bangali</option>
-                  <option value="arabic">arabic</option>
-                </select>
+
+                <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                  <input name="next" type="hidden" value="{{ redirect_to }}">
+                  <select name="language" select>
+                      {% get_current_language as LANGUAGE_CODE %}
+                      {% get_available_languages as LANGUAGES %}
+                      {% get_language_info_list for LANGUAGES as languages %}
+                      {% for language in languages %}
+                          <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                              {{ language.name_local }} ({{ language.code }})
+                          </option>
+                      {% endfor %}
+                  </select>
+                  <input type="submit" value="Go">
+              </form>
+
+
               </div>
             
             </div>
@@ -183,19 +207,19 @@
             <div class="navbar-content">
               <ul class="navbar-list">
                 <li class="navbar-item dropdown">
-                  <a class="navbar-link " href="#">home</a>
+                  <a class="navbar-link " href="#">{% translate "home" %}</a>
                  </li>
                 <li class="navbar-item dropdown-megamenu">
-                  <a class="navbar-link " href="/products">shop</a>
+                  <a class="navbar-link " href="/products">{% translate "shop" %}</a>
                 </li>
                 <li class="navbar-item dropdown-megamenu">
-                  <a class="navbar-link " href="/products/brands">brands</a>
+                  <a class="navbar-link " href="/products/brands">{% translate "brands" %}</a>
                 </li>
                 <li class="navbar-item dropdown">
-                  <a class="navbar-link " href="/orders">order</a>
+                  <a class="navbar-link " href="/orders">{% translate "order" %}</a>
                 </li>
                 <li class="navbar-item dropdown">
-                  <a class="navbar-link dropdown-arrow" href="/accounts/dashboards">dashboard</a>
+                  <a class="navbar-link dropdown-arrow" href="/accounts/dashboards">{% translate "dashboard" %}</a>
                   
                 </li>
               </ul>
@@ -203,14 +227,14 @@
                 <div class="navbar-info">
                   <i class="icofont-ui-touch-phone"></i>
                   <p>
-                    <small>call us</small>
+                    <small>{% translate "call us" %}</small>
                     <span>{{settings_data.call_us}}</span>
                   </p>
                 </div>
                 <div class="navbar-info">
                   <i class="icofont-ui-email"></i>
                   <p>
-                    <small>email us</small>
+                    <small>{% translate "emailus" %}</small>
                     <span>{{settings_data.email_us}}</span>
                   </p>
                 </div>
@@ -1007,23 +1031,49 @@
     <!--=====================================
                     JS LINK PART START
         =======================================-->
-    <!-- VENDOR -->
-    <script src="{% static 'en/vendor/bootstrap/jquery-1.12.4.min.js' %}"></script>
-    <script src="{% static 'en/vendor/bootstrap/popper.min.js' %}"></script>
-    <script src="{% static 'en/vendor/bootstrap/bootstrap.min.js' %}"></script>
-    <script src="{% static 'en/vendor/countdown/countdown.min.js' %}"></script>
-    <script src="{% static 'en/vendor/niceselect/nice-select.min.js' %}"></script>
-    <script src="{% static 'en/vendor/slickslider/slick.min.js' %}"></script>
-    <script src="{% static 'en/vendor/venobox/venobox.min.js' %}"></script>
 
-    <!-- CUSTOM -->
-    <script src="{% static 'en/js/nice-select.js' %}"></script>
-    <script src="{% static 'en/js/countdown.js' %}"></script>
-    <script src="{% static 'en/js/accordion.js' %}"></script>
-    <script src="{% static 'en/js/venobox.js' %}"></script>
-    <script src="{% static 'en/js/slick.js' %}"></script>
-    <script src="{% static 'en/js/main.js' %}"></script>
+    
+    {% if LANGUAGE_CODE == 'en' %}
+      
+                    
+              <!-- VENDOR -->
+              <script src="{% static 'en/vendor/bootstrap/jquery-1.12.4.min.js' %}"></script>
+              <script src="{% static 'en/vendor/bootstrap/popper.min.js' %}"></script>
+              <script src="{% static 'en/vendor/bootstrap/bootstrap.min.js' %}"></script>
+              <script src="{% static 'en/vendor/countdown/countdown.min.js' %}"></script>
+              <script src="{% static 'en/vendor/niceselect/nice-select.min.js' %}"></script>
+              <script src="{% static 'en/vendor/slickslider/slick.min.js' %}"></script>
+              <script src="{% static 'en/vendor/venobox/venobox.min.js' %}"></script>
 
+              <!-- CUSTOM -->
+              <script src="{% static 'en/js/nice-select.js' %}"></script>
+              <script src="{% static 'en/js/countdown.js' %}"></script>
+              <script src="{% static 'en/js/accordion.js' %}"></script>
+              <script src="{% static 'en/js/venobox.js' %}"></script>
+              <script src="{% static 'en/js/slick.js' %}"></script>
+              <script src="{% static 'en/js/main.js' %}"></script>
+   {% else %}
+              
+                         <!-- VENDOR -->
+              <script src="{% static 'ar/vendor/bootstrap/jquery-1.12.4.min.js' %}"></script>
+              <script src="{% static 'ar/vendor/bootstrap/popper.min.js' %}"></script>
+              <script src="{% static 'ar/vendor/bootstrap/bootstrap.min.js' %}"></script>
+              <script src="{% static 'ar/vendor/countdown/countdown.min.js' %}"></script>
+              <script src="{% static 'ar/vendor/niceselect/nice-select.min.js' %}"></script>
+              <script src="{% static 'ar/vendor/slickslider/slick.min.js' %}"></script>
+              <script src="{% static 'ar/vendor/venobox/venobox.min.js' %}"></script>
+
+              <!-- CUSTOM -->
+              <script src="{% static 'ar/js/nice-select.js' %}"></script>
+              <script src="{% static 'ar/js/countdown.js' %}"></script>
+              <script src="{% static 'ar/js/accordion.js' %}"></script>
+              <script src="{% static 'ar/js/venobox.js' %}"></script>
+              <script src="{% static 'ar/js/slick.js' %}"></script>
+              <script src="{% static 'ar/js/main.js' %}"></script>
+
+
+    {% endif %}
+    
     <!--=====================================
                     JS LINK PART END
         =======================================-->

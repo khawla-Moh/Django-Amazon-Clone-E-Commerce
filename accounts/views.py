@@ -6,6 +6,10 @@ from .forms import SignupForm,UserActivateForm
 
 from django.core.mail import send_mail
 
+
+from products.models import Product,Brand,Reviews  
+from orders.models import Order   
+
 # Create your views here.
 
 def signup(request):
@@ -54,6 +58,8 @@ def signup(request):
 
 
 def user_activate(request,username):
+
+
     
     profile=Profile.objects.get(user__username=username)   
     if request.method=='POST':
@@ -82,3 +88,27 @@ def user_activate(request,username):
     -recivee code activation
     -redirect to login page
     '''    
+
+
+
+def dashboard(request):
+    users=User.objects.all().count()
+    products=Product.objects.all().count()
+    brands=Brand.objects.all().count()
+    reviews=Reviews.objects.all().count()
+    
+
+    new_products=Product.objects.filter(flag='new')
+    sale_products=Product.objects.filter(flag='Sale')
+    feature_products=Product.objects.filter(flag='Feature')
+
+    return render(request,'accounts/dashboard.html',
+    {
+      'users':users,
+      'products':products,
+      'brands':brands,
+      'reviews':reviews,
+      'new_products':new_products, 
+      'sale_products':sale_products,
+      'feature_products':feature_products
+    })  
