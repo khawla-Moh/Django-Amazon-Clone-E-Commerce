@@ -5,8 +5,8 @@ services:
     build: .
     volumes: 
       - .:/app
-    #command: python manage.py runserver 0.0.0.0:8000
-    command: python manage.py migrate && python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
+    #command: python manage.py migrate && python manage.py runserver 0.0.0.0:8000
     ports:
       - "8000:8000"
     container_name: django-server  
@@ -25,7 +25,9 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=amazon
+      - POSTGRES_DB=Amazon
 
 volumes:
   postgres_data:  
+
+  
