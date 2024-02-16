@@ -212,6 +212,10 @@ CACHES = {
 
 
 #celery and redis
+CELERY_BROKER_URL='redis://127.0.0.1:6379'
+CELERY_BACKEND_RESULTS='redis://127.0.0.1:6379'
+
+
 LOGIN_REDIRECT_URL = '/'
 
 

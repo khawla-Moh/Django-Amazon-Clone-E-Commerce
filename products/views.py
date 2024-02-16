@@ -7,17 +7,20 @@ from django.db.models import Q,F,Value
 from django.db.models.aggregates import Count,Sum,Min,Max,Avg
 from django.views.decorators.cache import cache_page
 
-
-
+from .task import do_something
+import time
 # Create your views here.
-
-
-
-
-
-@cache_page(60 * 1)
 def mydebug(request):
-    '''
+    do_something.delay()
+    return render(request,'products/debug.html',{})
+
+
+
+
+
+#@cache_page(60 * 1)
+#def mydebug(request):
+'''
     ## number column:--------------------------------
     #data=Product.objects.all
     #data=Product.objects.filter(price=20)
@@ -25,31 +28,31 @@ def mydebug(request):
     #data=Product.objects.filter(price__gte=98)
     #data=Product.objects.filter(price__lt=98)
     data=Product.objects.filter(price__range=(77,98))
-    '''
+'''
     
     
-    '''
+'''
     ## relational query---------------------
     #data=Product.objects.filter(brand__id=5)
     #data=Product.objects.filter(brand__id__gt=200)
-    '''
+'''
 
-    '''
+'''
     ## text query----------------------------
     #data=Product.objects.filter(name__contains='Samantha')
     #data=Product.objects.filter(name__startswith='Samantha')
     #data=Product.objects.filter(name__endswith='thomas')
     #data=Product.objects.filter(tags__isnull=True)
-    '''
+'''
     
-    '''
+'''
     ## date:---------------------------------
     #data=Product.objects.filter(date-column-name__year=2022)
     #data=Product.objects.filter(date-column-name__month=12)
     #data=Product.objects.filter(date-column-name__day=2)
     
-    '''
-    '''
+'''
+'''
     ##complex queries--------------------------
     #data=Product.objects.filter(flag='New',price__gt=60)
     #data=Product.objects.filter(flag='New').filter(price__gt=60)
@@ -63,16 +66,16 @@ def mydebug(request):
     Q(price__gt=60)
     )
     
-    '''
+'''
     
-    '''
+'''
     ##field refernce---------------------------------
     data=Product.objects.filter('quantity=F('price')')
     data=Product.objects.filter('quantity=F('gategory__id')')
-    '''
+'''
 
    
-    '''
+'''
     ##order---------------------------------
     #data=Product.objects.all.order_by('name')  #ASC
     #data=Product.objects.order_by('name')
@@ -82,16 +85,16 @@ def mydebug(request):
     #data=Product.objects.order_by('name')[:10]
     #data=Product.objects.earliest('name')
     #data=Product.objects.latest('name')
-    ''' 
-    '''
+''' 
+'''
     ##limit fields------------------------------
     #data=Product.objects.values('name','price')
     #data=Product.objects.values_list('name','price','brand__name')
     #data=Product.objects.only('name','price')
     data=Product.objects.defer('description','subtitle')
     
-    '''
-    '''
+'''
+'''
     ## select related ---------------------------------
     #data=Product.objects.select_related('brand').all()   #foreignkey  one-to-one
     #data=Product.objects.prefetch_related('brand').all()  #            many-to-many    
@@ -99,21 +102,21 @@ def mydebug(request):
     #data=Product.objects.prefetch_related('category').select_related('brand').all()      
     #data=Product.objects.select_related('category').select_related('brand').all()      
 
-    '''
-    '''
+'''
+'''
     ##aggregation  count Min Max sum avg---------------
     data=Product.objects.aggregate(Avg('price'),Count('id'))
-    '''    
-    '''
+'''    
+'''
     Annotation-----------------------------------------
     #data=Product.objects.annotate(is_new=Value(0))
     data=Product.objects.annotate(price_with_taxs=F('price')*1.3)
   
-    '''
+'''
     #data=Product.objects.annotate(price_with_taxs=F('price')*1.3)
-    data=Product.objects.all()
+    #data=Product.objects.all()
     
-    return render(request,'products/debug.html',{'data':data})
+    #return render(request,'products/debug.html',{'data':data})
 
 
 
