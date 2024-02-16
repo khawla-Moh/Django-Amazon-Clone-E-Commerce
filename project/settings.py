@@ -210,6 +210,8 @@ CACHES = {
 
  """
 
+
+#celery and redis
 LOGIN_REDIRECT_URL = '/'
 
 
