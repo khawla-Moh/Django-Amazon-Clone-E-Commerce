@@ -200,14 +200,14 @@ CACHES = {
     }
 }
 """
-
+ 
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
         "LOCATION": "redis://redis:6379/0",
     }
 }
-
+ 
 
 
 """ 
@@ -215,10 +215,10 @@ CACHES = {
 CELERY_BROKER_URL='redis://127.0.0.1:6379'
 CELERY_BACKEND_RESULTS='redis://127.0.0.1:6379'
  """
+  
 #celery and redis in docker
 CELERY_BROKER_URL='redis://redis:6379/0'
 CELERY_BACKEND_RESULTS='redis://redis:6379/0'
-
 
 LOGIN_REDIRECT_URL = '/'
 
