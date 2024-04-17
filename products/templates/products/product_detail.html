@@ -64,7 +64,7 @@
             <i class="active icofont-star"></i>
             <i class="active icofont-star"></i>
             <i class="icofont-star"></i>
-            <a href="#">(3 reviews)</a>
+            <a href="#">({{reviews|length}} reviews)</a>
           </div>
           <h3 class="details-price">
             <del>{{object.price}}</del>
@@ -189,7 +189,7 @@
         <div class="product-details-frame" id="all-revies"> <!-- id used with ajax -->
       <!-- Include from inclide reviwes-->
      
-         <h3 class="frame-title">Reviews ({{reviewS|length}})</h3>
+         <h3 class="frame-title">Reviews ({{reviews|length}})</h3>
          <ul class="review-list">
            {% for review in reviews %}
          
@@ -217,10 +217,7 @@
              <ul class="review-reply-list">
                <li class="review-reply-item">
                  <div class="review-media"></div>
-                 <form class="review-reply">
-                   <input type="text" placeholder="reply your thoughts" />
-                   <button><i class="icofont-reply"></i>reply</button>
-                 </form>
+                 
                </li>
              </ul>
            </li>
