@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect,get_object_or_404
 import datetime
 
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 from .models import Order,OrderDetail,Cart,CartDetail,Coupon
 from products.models import Product
@@ -64,9 +66,19 @@ def checkout(reguest):
 def add_to_cart(request):
    product=Product.objects.get(id=request.POST['product_id'])
    quantity=int(request.POST['quantity'])
+
    cart=Cart.objects.get(user=request.user,status='Inprogress')
    cart_detail,created=CartDetail.objects.get_or_create(cart=cart,product=product)           #field cart,product in cartDetial model
-   
+   cart_detail.quantity=quantity
    cart_detail.total=round(product.price * cart_detail.quantity,2)
    cart_detail.save()
-   return redirect(f'/products/{product.slug}')
+   
+   #get new data after create using ajax
+   cart=Cart.objects.get(user=request.user,status='Inprogress')
+   cart_detail=CartDetail.objects.filter(cart=cart)           #field cart,product in cartDetial model
+   
+   page=render_to_string('cart_includes.html',{'cart_details_data':cart_detail,'cart_data':cart}) # {% for review in reviews %}
+   return JsonResponse({'result':page})
+    
+
+   #return redirect(f'/products/{product.slug}')

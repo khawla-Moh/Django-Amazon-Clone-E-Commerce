@@ -3,9 +3,13 @@ from django.db.models.query import QuerySet
 from django.shortcuts import render,redirect
 from django.views.generic import ListView,DetailView
 from .models import Product,Brand,Reviews,ProductImages
+
 from django.db.models import Q,F,Value
 from django.db.models.aggregates import Count,Sum,Min,Max,Avg
 from django.views.decorators.cache import cache_page
+
+from django.http import JsonResponse
+from django.template.loader import render_to_string 
 
 from .task import do_something
 import time
@@ -194,11 +198,18 @@ def add_review(request,slug):
         review=review,
         rate=rate
     )
-    
-    return redirect(f'/products/{slug}')
+
+    #get all reviews using ajax
+    review=Reviews.objects.filter(product=product)
+    page=render_to_string('includes/reviews.html',{'reviews':review}) # {% for review in reviews %}
+    return JsonResponse({'result':page})
+        
+     
+   # return redirect(f'/products/{slug}')
 
 
-""" class BrandDetails(DetailView):
+""" 
+class BrandDetails(DetailView):
     model=Brand
 
     def get_context_data(self, **kwargs) :

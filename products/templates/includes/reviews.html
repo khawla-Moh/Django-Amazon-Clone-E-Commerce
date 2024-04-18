@@ -5,7 +5,7 @@
 
 <h3 class="frame-title">Reviews ({{reviews|length}})</h3>
 <ul class="review-list">
-  {% for review in reviewsTem %}
+  {% for review in reviews %}
 
   <li class="review-item">
     <div class="review-media">
@@ -31,10 +31,7 @@
     <ul class="review-reply-list">
       <li class="review-reply-item">
         <div class="review-media"></div>
-        <form class="review-reply">
-          <input type="text" placeholder="reply your thoughts" />
-          <button><i class="icofont-reply"></i>reply</button>
-        </form>
+    
       </li>
     </ul>
   </li>
