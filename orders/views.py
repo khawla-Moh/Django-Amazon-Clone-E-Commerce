@@ -69,16 +69,21 @@ def add_to_cart(request):
 
    cart=Cart.objects.get(user=request.user,status='Inprogress')
    cart_detail,created=CartDetail.objects.get_or_create(cart=cart,product=product)           #field cart,product in cartDetial model
+   
    cart_detail.quantity=quantity
    cart_detail.total=round(product.price * cart_detail.quantity,2)
    cart_detail.save()
    
    #get new data after create using ajax
+
    cart=Cart.objects.get(user=request.user,status='Inprogress')
    cart_detail=CartDetail.objects.filter(cart=cart)           #field cart,product in cartDetial model
    
+   total=cart.cart_total
+   cart_count=len(cart_detail)
+
    page=render_to_string('cart_includes.html',{'cart_details_data':cart_detail,'cart_data':cart}) # {% for review in reviews %}
-   return JsonResponse({'result':page})
+   return JsonResponse({'result':page,'total':total,'cart_count':cart_count})
     
 
-   #return redirect(f'/products/{product.slug}')
+   #return redirect(f'/products/{product.slug}')+

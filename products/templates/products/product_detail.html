@@ -99,7 +99,7 @@
             
               {% if object.quantity > 0 %}
                     
-            <form action="/orders/add_to_cart" method="post"  id="addToCart">
+            <form action="/orders/add_to_cart" method="post"  id="addToCart" >
               {% csrf_token %}
                   <div class="row">
                       <div class="col-lg-8 my-2">
@@ -109,7 +109,7 @@
                   </div>  
                   
                   <div class="row">
-                      <button class="col-lg-8 product-add">
+                      <button class="col-lg-8 product-add" type="submit">
                         <i class="fas fa-shopping-basket"></i>
                         <span> add to cart</span>
                       </button>
@@ -369,7 +369,9 @@
           data: $(this).serialize(),
           dataType:'json',
           success:function(response){
-            $('#addToCart').html(response['result'])
+            $('#cart_aside').html(response['result'])
+            $("#cartTotal").text(response['total'])
+            $('#cartCount').text(response['cart_count'])
           },
           error:function(){}
         })
