@@ -283,18 +283,18 @@
 <script src="https://js.stripe.com/v3/"></script>
 <script>
    function buy(event){
-          event.preventDefualt();
+          event.preventDefault();
           stripe=Stripe('{{pub_key}}')
           fetch('/orders/checkout/process_payment',
         {
             method:'POST',
             headers:{
-                'X-CSRFToken':'{% csfr_token %}',
+                'X-CSRFToken':'{{ csrf_token }}',
                 'Content-Type':'application/json'
             }
-        }).then(function(response){
+        }).then(function (response){
             return response.json()   
-        }).then(function(session){
+        }).then(function (session){
            return stripe.redirctToCheckout({'sessionId':session.session.id}) 
         })
    }

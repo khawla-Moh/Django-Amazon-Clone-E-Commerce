@@ -14,6 +14,7 @@ from settings.models import DeliveryFee
 from utils.generate_code import generate_code
 
 from django.http import JsonResponse
+import stripe
 # Create your views here.
 def order_list(request):
     data=Order.objects.filter(user=request.user)
@@ -124,7 +125,7 @@ def process_payment(request): #create invoice
        request.session['order_code']=code 
        request.session.save()
        #GENERATE INVOICE IN STRIPE
-       stripe.api_key= settings.STRIPE_API_SECRET
+       stripe.api_key= settings.STRIPE_API_KEY_SECRET
        checkout_session = stripe.checkout.Session.create(
             line_items=[
                 {
@@ -135,12 +136,13 @@ def process_payment(request): #create invoice
                         'unit_amount':int(total*100)
 
                         },
+                        'quantity':1
                     
                 },
             ],
             mode='payment',
-            success_url='127.0.0.1:8000/orders/checkout/payment/success' + '/success.html',
-            cancel_url='127.0.0.1:orders/checkout/payment/success' + '/cancel.html',
+            success_url='http://127.0.0.1:8000/orders/checkout/payment/success' + '/success.html',
+            cancel_url='http://127.0.0.1:8000/orders/checkout/payment/success' + '/cancel.html',
         )
        return JsonResponse({'session':checkout_session})   
 
