@@ -247,8 +247,20 @@ LANGUAGES = [
 #EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" to check email from terminal
 EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST ='smtp.gmail.com'
-EMAIL_HOST_PASSWORD ='gurstnsjoaxxwuyu'
+#EMAIL_HOST_PASSWORD ='gurstnsjoaxxwuyu'
 EMAIL_HOST_USER ='noor539cc@gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True 
 EMAIL_USE_SSL = False 
+
+
+
+
+
+
+
+STRIPE_API_KEY_PUBLISHABLE='pk_test_51P7vplRw9JofhpOlVrQQV3Nwf36ET0CuJeZuYAfcddCCc3Xtid4CU53RXRDw5twhtRTVK5q7UjNokd8g1WofYE5N00EwSsVDO6'
+STRIPE_API_SECRET='sk_test_51P7vplRw9JofhpOlolmIPLmYLRyyEJJDtwVuMhqkZVJem1iFA1K6pc7tWzfUcsXX17CpouX55Ph4l9mf12kDwv0y00e9aWG9hz'
+
+
+

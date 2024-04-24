@@ -1,12 +1,19 @@
 from django.shortcuts import render,redirect,get_object_or_404
 import datetime
 
+from django.conf import settings
+
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 
 from .models import Order,OrderDetail,Cart,CartDetail,Coupon
+from accounts.models import Address
 from products.models import Product
 from settings.models import DeliveryFee
+
+from utils.generate_code import generate_code
+
+from django.http import JsonResponse
 # Create your views here.
 def order_list(request):
     data=Order.objects.filter(user=request.user)
@@ -18,6 +25,9 @@ def checkout(reguest):
     cart_detail=CartDetail.objects.filter(cart=cart)
     delivery_fee=DeliveryFee.objects.last().fee
    
+    
+    pub_key=settings.STRIPE_API_KEY_PUBLISHABLE
+
 
     #____________________applying Coupon___________________
     if reguest.method=='POST':
@@ -46,7 +56,8 @@ def checkout(reguest):
                     "subTotal":subTotal,
                     "delivery_fee":delivery_fee,
                     "discount":coupon_value,
-                    "total":total
+                    "total":total,
+                    "pub_key":pub_key
                     })
 
     subTotal=cart.cart_total 
@@ -59,7 +70,8 @@ def checkout(reguest):
         "subTotal":subTotal,
         "delivery_fee":delivery_fee,
         "discount":discount,
-        "total":total
+        "total":total,
+        "pub_key":pub_key
         })
  
 
@@ -87,3 +99,86 @@ def add_to_cart(request):
     
 
    #return redirect(f'/products/{product.slug}')+
+
+
+
+
+
+
+
+
+def process_payment(request): #create invoice
+       cart=Cart.objects.get(user=request.user,status='Inprogress')
+       Delivery_fee=DeliveryFee.objects.last().fee
+
+       if cart.total_with_coupn:
+           total=cart.total_with_coupn + Delivery_fee
+
+       else:
+           total=cart.total + Delivery_fee   
+       
+       #GENERATE CODE TO NEW ORDER
+       code=generate_code()    
+
+       #django seesion
+       request.session['order_code']=code 
+       request.session.save()
+       #GENERATE INVOICE IN STRIPE
+       stripe.api_key= settings.STRIPE_API_SECRET
+       checkout_session = stripe.checkout.Session.create(
+            line_items=[
+                {
+                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                    'price_data': {
+                        'currency':'usd',
+                        'product_data':{'name':code},
+                        'unit_amount':int(total*100)
+
+                        },
+                    
+                },
+            ],
+            mode='payment',
+            success_url='127.0.0.1:8000/orders/checkout/payment/success' + '/success.html',
+            cancel_url='127.0.0.1:orders/checkout/payment/success' + '/cancel.html',
+        )
+       return JsonResponse({'session':checkout_session})   
+
+def payment_success(request):
+       cart=Cart.objects.get(user=request.user,status='Inprogress')
+       cartt_detial=CartDetail.objects.filter(cart=cart)
+       payment_Address=Address.objects.last()
+       
+       code=request.session.get('order_code')
+
+       #cart:order |cart_detail :order_detail
+       new_order=Order.objects.create(
+            user=request.user,
+            status= 'Reecieved',
+            code=code,
+            delivery_address= payment_Address,
+            coupon=cart.coupon,
+            total_with_coupn=cart.total_with_coupn,
+            total=cart.cart_total
+            )
+            #creae cart details
+       for item in cart_detail  :
+                product=Product.objects.get(id=item.product.id) 
+                OrderDetail.objects.create(
+                Order=new_order,
+                product=product,
+                quantity=item.quantity,
+                price=product.price,
+                total=round(item.quantity * product.price,2) 
+                )
+            #decreasse product quantity 
+                product.quantity -=item.quantity
+                product.save()
+            #close cart
+       cart.status='Completed'
+       cart.save()
+       return render(request,'orders/success.html',{'code':code})
+
+def payment_faild(request):
+       return render(request,'orders/faile.html',{})
+   
